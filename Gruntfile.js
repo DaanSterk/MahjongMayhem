@@ -2,7 +2,7 @@ module.exports = function(grunt) {
    grunt.initConfig({
    browserify: {
 	   js: {
-		   src: 'app/js/app.js',
+		   src: 'app/js/**/*.js',
 		   dest: 'dist/js/app.js',
 		   options: {
 			 external: ['angular'],
