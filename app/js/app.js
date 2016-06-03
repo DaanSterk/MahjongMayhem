@@ -6,8 +6,18 @@ var app = angular.module('MahjongMayhem', ['ui.router']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
+    //$urlRouterProvider.reloadOnSearch = true;
+
     $stateProvider
-        .state('games', {
+
+        .state('app', {
+            url: '/app',
+            abstract: true,
+            templateUrl: 'index.html',
+            controller: 'AppCtrl'
+        })
+
+        .state('app.games', {
             url: "/games",
             templateUrl: "templates/games/index.html",
             controller: "GamesCtrl"
