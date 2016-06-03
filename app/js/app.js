@@ -10,10 +10,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
 
-        .state('app', {
-            url: '/app',
+    .state('app', {
+        url: '/app',
+        abstract: true,
+        templateUrl: 'index.html',
+        controller: 'AppCtrl'
+    })
+
+        .state('app.index', {
+            url: '/test',
             abstract: true,
-            templateUrl: 'index.html',
+            templateUrl: 'templates/app/index.html',
             controller: 'AppCtrl'
         })
 
