@@ -10,43 +10,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Dragon</td>
-                    <td>Daan Sterk</td>
+                <tr ng-repeat="game in games">
+                    <td>{{ game.gameTemplate._id }}</td>
+                    <td>{{ game.createdBy._id }}</td>
                     <td>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                2 - 32 <span class="caret"></span>
+                                {{ game.minPlayers }} - {{ game.maxPlayers }} ({{ games.length }}) <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Jan Paparazzi</a></li>
-                                <li><a href="#">El Shabibi</a></li>
-                                <li><a href="#">Hans Kraai Jr.</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li ng-repeat="player in game.players"><a href="">{{ player.name }}</a></li>
                             </ul>
                         </div>
                     </td>
-                    <td>Finished</td>
-                </tr>
-                <tr>
-                    <td>Dragon</td>
-                    <td>Daan Sterk</td>
-                    <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                2 - 32 <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Jan Paparazzi</a></li>
-                                <li><a href="#">El Shabibi</a></li>
-                                <li><a href="#">Hans Kraai Jr.</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>Finished</td>
+                    <td class="text-capitalize">{{ game.state }}</td>
                 </tr>
             </tbody>
         </table>

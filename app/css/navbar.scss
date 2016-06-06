@@ -1,0 +1,45 @@
+$navbar-color: #2b81af;
+$navbar-font: "Segoe UI", sans-serif;
+
+#navbar {
+    background-color: $navbar-color;
+    margin-bottom: 10px;
+
+    ul {
+        height: 40px;
+        margin: 0;
+        padding: 0;
+
+        list-style-type: none;
+    }
+    li {
+        float: left;
+
+        a {
+            display: block;
+            padding: 10px 15px;
+
+            font-family: $navbar-font;
+            text-decoration: none;
+            color: #FFF;
+
+            cursor: pointer;
+
+            &:hover {
+                background-color: #FFF;
+
+                color: $navbar-color;
+            }
+        }
+    }
+}
+
+.nav-selected {
+    background-color: #FFF;
+
+    color: #2b81af;
+}
+
+.nav-float-right {
+    float: right !important;
+}

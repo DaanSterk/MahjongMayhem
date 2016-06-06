@@ -11,15 +11,14 @@
     width: 600px;
     margin-top: 200px;
     padding-bottom: 20px;
-    border: 2px dotted #000;
+    border: 2px solid #0d3349;
 }
 
 #games-list {
     width: 100%;
-}
+    td {
+        width: 25%;
 
-#games-list td {
-    width: 25%;
-
-    line-height: 35px;
+        line-height: 35px;
+    }
 }
