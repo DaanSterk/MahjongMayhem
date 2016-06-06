@@ -1,6 +1,54 @@
 <div ng-controller="GamesCtrl">
     <div class="container">
-        <h1>Games</h1>
-        <button class="btn btn-default" ng-click="showView('index')">Index</button>
+        <table id="games-list" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Template</th>
+                    <th>Created by</th>
+                    <th>Player info</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Dragon</td>
+                    <td>Daan Sterk</td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                2 - 32 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Jan Paparazzi</a></li>
+                                <li><a href="#">El Shabibi</a></li>
+                                <li><a href="#">Hans Kraai Jr.</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>Finished</td>
+                </tr>
+                <tr>
+                    <td>Dragon</td>
+                    <td>Daan Sterk</td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                2 - 32 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Jan Paparazzi</a></li>
+                                <li><a href="#">El Shabibi</a></li>
+                                <li><a href="#">Hans Kraai Jr.</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>Finished</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

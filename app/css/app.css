@@ -1,3 +1,25 @@
 .text-center {
     text-align: center;
 }
+
+.center {
+    display: block !important;
+    margin: 0 auto;
+}
+
+#welcome-box {
+    width: 600px;
+    margin-top: 200px;
+    padding-bottom: 20px;
+    border: 2px dotted #000;
+}
+
+#games-list {
+    width: 100%;
+}
+
+#games-list td {
+    width: 25%;
+
+    line-height: 35px;
+}
