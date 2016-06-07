@@ -1,31 +1,73 @@
 <div ng-controller="GamesCtrl">
     <div class="container">
-        <table id="games-list" class="table table-striped">
-            <thead>
+        <div class="row search-row">
+            <table id="search-table">
                 <tr>
-                    <th>Template</th>
-                    <th>Created by</th>
-                    <th>Player info</th>
-                    <th>State</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="game in games">
-                    <td>{{ game.gameTemplate._id }}</td>
-                    <td>{{ game.createdBy._id }}</td>
                     <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ game.minPlayers }} - {{ game.maxPlayers }} ({{ games.length }}) <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="player in game.players"><a href="">{{ player.name }}</a></li>
-                            </ul>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                            <input type="text" class="form-control" ng-model="search_template" placeholder="Search by template">
                         </div>
                     </td>
-                    <td class="text-capitalize">{{ game.state }}</td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                            <input type="text" class="form-control" ng-model="search_creator" placeholder="Search by creator">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                            <input type="text" class="form-control" ng-model="search_player" placeholder="Search by player">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            </span>
+                            <input type="text" class="form-control" ng-model="search_state" placeholder="Search by state">
+                        </div>
+                    </td>
                 </tr>
-            </tbody>
-        </table>
+            </table>
+        </div>
+        <div class="row">
+            <table id="games-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Template</th>
+                        <th>Created by</th>
+                        <th>Player info</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="game in games">
+                        <td>{{ game.gameTemplate._id }}</td>
+                        <td>{{ game.createdBy._id }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle player-button-fixed-width" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ game.players.length }} / {{ game.maxPlayers }} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li role="separator"><a>Min. players: {{ game.minPlayers }}</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li ng-repeat="player in game.players"><a href="">{{ player.name }}</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="text-capitalize">{{ game.state }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

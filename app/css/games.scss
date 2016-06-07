@@ -1,0 +1,31 @@
+#search-table {
+  width: 100%;
+  td {
+    width: 25%;
+  }
+}
+
+#games-table {
+  width: 100%;
+  td {
+    width: 25%;
+
+    line-height: 35px;
+  }
+}
+
+.search-row {
+  border-top: 3px solid lightgrey;
+  border-bottom: 3px solid lightgrey;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+}
+
+.search-button-fix {
+  height: 34px;
+}
+
+.player-button-fixed-width {
+  width: 80px;
+}
