@@ -4,35 +4,35 @@
             <table id="search-table">
                 <tr>
                     <td>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                            <input type="text" class="form-control" ng-model="search_template" placeholder="Search by template">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span ng-if="!filterTemplate">All</span>
+                                {{ filterTemplate }}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="">
+                                <li><a ng-click="changeFilterTemplate(undefined)">All</a></li>
+                                <li ng-repeat="template in templates">
+                                    <a ng-click="changeFilterTemplate(template)">{{template}}</a>
+                                </li>
+                            </ul>
                         </div>
                     </td>
+                    <td><input type="text" class="form-control" placeholder="Creator (e-mail)" ng-model="filterCreator" ng-change="search()" /></td>
+                    <td><input type="text" class="form-control" placeholder="Player (e-mail)" ng-model="filterPlayer" ng-change="search()" /></td>
                     <td>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                            <input type="text" class="form-control" ng-model="search_creator" placeholder="Search by creator">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                            <input type="text" class="form-control" ng-model="search_player" placeholder="Search by player">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default search-button-fix" type="button"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                            <input type="text" class="form-control" ng-model="search_state" placeholder="Search by state">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span ng-if="!filterState">All</span>
+                                {{ capitalize(filterState) }}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="">
+                                <li><a ng-click="changeFilterState(undefined)">All</a></li>
+                                <li ng-repeat="state in states">
+                                    <a ng-click="changeFilterState(state)">{{ state }}</a>
+                                </li>
+                            </ul>
                         </div>
                     </td>
                 </tr>

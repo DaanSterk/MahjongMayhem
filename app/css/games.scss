@@ -1,12 +1,14 @@
 #search-table {
   width: 100%;
   td {
-    width: 25%;
+    width: 25% !important;
+  }
+  button {
+    width: 100%;
   }
 }
 
 #games-table {
-  width: 100%;
   td {
     width: 25%;
 
@@ -20,10 +22,6 @@
   padding-bottom: 10px;
   padding-top: 10px;
   margin-bottom: 5px;
-}
-
-.search-button-fix {
-  height: 34px;
 }
 
 .player-button-fixed-width {
