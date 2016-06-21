@@ -46,7 +46,6 @@ angular.module('MahjongMayhem')
             var queryStringBase = '?pageSize=' + $scope.pageSize + '&pageIndex=' + $scope.pageIndex;
             $http.get(GLOBALS.API_URL + '/games' + queryStringBase + filter)
                 .then(function(response) {
-                    $scope.games = null;
                     $scope.games = response.data;
                 });
         }
