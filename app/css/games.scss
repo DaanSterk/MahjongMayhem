@@ -27,3 +27,13 @@
 .player-button-fixed-width {
   width: 80px;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.unclickable {
+  &:hover {
+    background-color: #FFF !important;
+  }
+}

@@ -15,14 +15,12 @@ angular.module("MahjongMayhem")
 
         .state('index', {
             url: '/',
-            templateUrl: 'templates/app/index.html',
-            controller: 'AppCtrl'
+            templateUrl: 'templates/app/index.html'
         })
 
         .state('games', {
             url: "/games",
-            templateUrl: "templates/games/index.html",
-            controller: "GamesCtrl"
+            templateUrl: "templates/games/index.html"
         });
 
     // For any unmatched url, send to /index

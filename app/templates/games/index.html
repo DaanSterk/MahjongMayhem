@@ -11,8 +11,8 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="">
-                                <li><a ng-click="changeFilterTemplate(undefined)">All</a></li>
-                                <li ng-repeat="template in templates">
+                                <li><a ng-click="changeFilterTemplate(undefined)" class="clickable">All</a></li>
+                                <li ng-repeat="template in templates" class="clickable">
                                     <a ng-click="changeFilterTemplate(template)">{{template}}</a>
                                 </li>
                             </ul>
@@ -28,8 +28,8 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="">
-                                <li><a ng-click="changeFilterState(undefined)">All</a></li>
-                                <li ng-repeat="state in states">
+                                <li><a ng-click="changeFilterState(undefined)" class="clickable">All</a></li>
+                                <li ng-repeat="state in states" class="clickable">
                                     <a ng-click="changeFilterState(state)">{{ state }}</a>
                                 </li>
                             </ul>
@@ -58,9 +58,9 @@
                                     {{ game.players.length }} / {{ game.maxPlayers }} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li role="separator"><a>Min. players: {{ game.minPlayers }}</a></li>
+                                    <li role="separator"><a class="unclickable">min. players: {{ game.minPlayers }}</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li ng-repeat="player in game.players"><a href="">{{ player.name }}</a></li>
+                                    <li ng-repeat="player in game.players" class="clickable"><a href="">{{ player.name }}</a></li>
                                 </ul>
                             </div>
                         </td>
