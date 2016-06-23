@@ -50,6 +50,13 @@ angular.module('MahjongMayhem')
                 });
         }
 
+        newGame = function() {
+            $http.post(GLOBALS.API_URL + '/games', $scope.game)
+                .then(function(response) {
+                    // TODO: !
+            })
+        }
+
         // PAGE LOAD
         getGames();
 }]);

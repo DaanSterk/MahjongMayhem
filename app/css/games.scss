@@ -10,7 +10,7 @@
 
 #games-table {
   td {
-    width: 25%;
+    width: 20%;
 
     line-height: 35px;
   }
@@ -36,4 +36,8 @@
   &:hover {
     background-color: #FFF !important;
   }
+}
+
+#btn-new-game {
+  width: 250px;
 }

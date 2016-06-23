@@ -46,6 +46,7 @@
                         <th>Created by</th>
                         <th>Player info</th>
                         <th>State</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,9 +66,17 @@
                             </div>
                         </td>
                         <td class="text-capitalize">{{ game.state }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button ng-if="game.state === 'open'" class="btn btn-success">Join game</button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="row">
+            <button id="btn-new-game" ng-click="showView('newgame')" class="btn center">New game</button>
         </div>
     </div>
 </div>
