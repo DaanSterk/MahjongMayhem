@@ -29,8 +29,8 @@ angular.module("MahjongMayhem")
         })
 
         .state('login', {
-            url: "/login",
-            templateUrl: "templates/app/login.html"
+            url: "/login?username?token",
+            controller: "LoginCtrl"
         })
 
     // For any unmatched url, send to /index
