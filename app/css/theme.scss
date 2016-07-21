@@ -1,0 +1,46 @@
+$themes: (
+  default: #2b81af,
+  banana: #f1c40f,
+  cherry: #c0392b,
+  blueberry: #8e44ad,
+  leaf: #27ae60,
+  nightsky: #2980b9
+);
+
+@mixin theme($name, $color) {
+  .#{$name} {
+    #navbar {
+      background-color: $color;
+      border-color: darken($color, 10%);
+    }
+  }
+
+  [data-theme='#{$name}'] {
+    background: $color;
+
+    &:hover {
+      background: darken($color, 10%);
+    }
+
+    &[disabled] {
+      background: desaturate($color, 40%);
+    }
+  }
+}
+
+@each $key, $value in $themes {
+  @include theme($key, $value);
+}
+
+#theme-controls{
+  margin-top: 30px;
+}
+
+#theme-control-container{
+  margin-left: 5px;
+}
+
+#theme-control-container > button {
+  color: white;
+  font-weight: bold;
+}

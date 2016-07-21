@@ -1,35 +1,37 @@
 <html lang="en">
-    <head>
+<head>
     <!-- The css is copied into dist/css/app.css by the copy task -->
-     <link rel="stylesheet" href="css/app.css"/>
-     <link rel="stylesheet" href="css/navbar.css"/>
-     <link rel="stylesheet" href="css/games.css"/>
-     <link rel="stylesheet" href="css/login.css"/>
-     <script src="js/app.js"></script>
+    <link rel="stylesheet" href="css/app.css"/>
+    <link rel="stylesheet" href="css/navbar.css"/>
+    <link rel="stylesheet" href="css/games.css"/>
+    <link rel="stylesheet" href="css/theme.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+    <script src="js/app.js"></script>
 
-     <!-- Latest compiled and minified CSS -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    </head>
-    <body ng-app="MahjongMayhem" ng-controller="AppCtrl">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="MahjongMayhem" ng-controller="AppCtrl">
 
-        <div id="navbar">
-            <div class="container">
-                <ul>
-                    <li>
-                        <a ng-click="showView('index')">Home</a>
-                    </li>
-                    <li>
-                        <a ng-click="showView('games')">Games</a>
-                    </li>
-                    <li class="nav-float-right">
-                        <a ng-if="isLoggedIn()" ng-click="logout()">{{ getUsername() }} (Logout)</a>
-                        <a ng-if="!isLoggedIn()" ng-click="login()">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="container">
-            <div ui-view></div>
-        </div>
-    </body>
+<div id="navbar" class="theme-element">
+    <div class="container">
+        <ul>
+            <li>
+                <a ng-click="showView('index')">Home</a>
+            </li>
+            <li>
+                <a ng-click="showView('games')">Games</a>
+            </li>
+            <li class="nav-float-right">
+                <a ng-if="isLoggedIn()" ng-click="logout()">{{ getUsername() }} (Logout)</a>
+                <a ng-if="!isLoggedIn()" ng-click="login()">Login</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div ui-view></div>
+</div>
+</body>
 </html>
