@@ -14,16 +14,16 @@ angular.module('MahjongMayhem').controller('AppCtrl', ['$scope', '$state', '$sta
     }
 
     $scope.logout = function() {
-        localStorage.removeItem('username');
-        localStorage.removeItem('token');
+        localStorage.removeItem('user.username');
+        localStorage.removeItem('user.token');
     }
 
     $scope.isLoggedIn = function() {
-        return localStorage.getItem('username') !== null;
+        return localStorage.getItem('user.username') !== null;
     }
 
     $scope.getUsername = function() {
-        return localStorage.getItem('username');
+        return localStorage.getItem('user.username');
     }
 
 }]);

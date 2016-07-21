@@ -1,6 +1,6 @@
 <div ng-controller="GamesCtrl">
     <div class="container">
-        <div class="row search-row">
+        <div id="search-row" class="row">
             <table id="search-table">
                 <tr>
                     <td>
@@ -68,7 +68,7 @@
                         <td class="text-capitalize">{{ game.state }}</td>
                         <td>
                             <div class="btn-group">
-                                <button ng-if="game.state === 'open'" class="btn btn-success">Join game</button>
+                                <button ng-if="game.state === 'open'" ng-click="joinGame(game.id)" class="btn btn-success">Join game</button>
                             </div>
                         </td>
                     </tr>

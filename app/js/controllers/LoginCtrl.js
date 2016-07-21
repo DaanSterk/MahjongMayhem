@@ -2,8 +2,8 @@ angular.module('MahjongMayhem').controller('LoginCtrl', ['$scope', '$state', fun
 
     // If returned from callback...
     if ($state.params.username && $state.params.token) {
-        localStorage.setItem('username', $state.params.username);
-        localStorage.setItem('token', $state.params.token);
+        localStorage.setItem('user.username', $state.params.username);
+        localStorage.setItem('user.token', $state.params.token);
         $state.go("index");
     }
 

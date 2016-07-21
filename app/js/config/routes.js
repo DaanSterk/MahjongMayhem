@@ -33,6 +33,14 @@ angular.module("MahjongMayhem")
             controller: "LoginCtrl"
         })
 
+        .state('game', {
+            url: "/games/game",
+            params: {
+                id: null
+            },
+            templateUrl: "templates/games/detail"
+        })
+
     // For any unmatched url, send to /index
     $urlRouterProvider.otherwise("/");
 

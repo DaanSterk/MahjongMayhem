@@ -44,17 +44,21 @@ angular.module('MahjongMayhem')
         var filter;
         getGames = function() {
             var queryStringBase = '?pageSize=' + $scope.pageSize + '&pageIndex=' + $scope.pageIndex;
-            $http.get(GLOBALS.API_URL + '/games' + queryStringBase + filter)
+            $http.get(GLOBALS.API_URL + '/games/' + queryStringBase + filter)
                 .then(function(response) {
                     $scope.games = response.data;
                 });
         }
 
-        newGame = function() {
+        $scope.newGame = function() {
             $http.post(GLOBALS.API_URL + '/games', $scope.game)
                 .then(function(response) {
-                    // TODO: !
-            })
+                    $state.go('games');
+            });
+        }
+
+        $scope.joinGame = function(gameid) {
+            $state.go("game", { id : gameid });
         }
 
         // PAGE LOAD
