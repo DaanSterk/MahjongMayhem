@@ -117,6 +117,21 @@ angular.module('MahjongMayhem')
             return false;
         }
 
+        $scope.playGame = function(gameid) {
+            $state.go("game", { id: gameid} );
+        }
+
+        $scope.isPlayable = function(game) {
+            var username = localStorage.getItem("user.username");
+
+            if (game.state !== 'playing'
+                || !playerCollectionContains(game.players, username)) {
+                return false;
+            }
+
+            return true;
+        }
+
         function playerCollectionContains(collection, item) { // Determine if player e-mail address is in game players collection.
             for (var i = 0; i < collection.length; i++) {
                 if (collection[i]._id === item) {
