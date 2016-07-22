@@ -2,7 +2,7 @@ angular.module('MahjongMayhem')
     .controller('GamesCtrl', ['$scope', '$state', '$http', 'GLOBALS', function($scope, $state, $http, GLOBALS) {
 
         // -----DEFAULT------
-        $scope.pageSize = 12;
+        $scope.pageSize = 100;
         $scope.pageIndex = 0;
         // ------------------
 
@@ -58,7 +58,72 @@ angular.module('MahjongMayhem')
         }
 
         $scope.joinGame = function(gameid) {
-            $state.go("game", { id : gameid });
+            $http.post(GLOBALS.API_URL + '/games/' + gameid + '/players', {})
+                .then(function(response) {
+                    $state.reload();
+                    // $state.go("game", { id : gameid });
+                });
+        }
+
+        $scope.isJoinable = function(game) {
+            var username = localStorage.getItem("user.username");
+
+            if (game.state === "playing"
+                || username === null
+                || game.createdBy._id === username
+                || game.players.length === game.maxPlayers
+                || playerCollectionContains(game.players, username)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        $scope.startGame = function(gameid) {
+            $http.post(GLOBALS.API_URL + '/games/' + gameid + '/start', {})
+                .then(function(response) {
+                    $state.reload();
+                });
+        }
+
+        $scope.isStartable = function(game) {
+            var username = localStorage.getItem("user.username");
+
+            if (game.state !== "open"
+                || game.createdBy._id !== username
+                || game.players.length < game.minPlayers) {
+                return false;
+            }
+
+            return true;
+        }
+
+        $scope.deleteGame = function(gameid) {
+            $http.delete(GLOBALS.API_URL + '/games/' + gameid, {})
+                .then(function(response) {
+                    $state.reload();
+                });
+        }
+
+        $scope.isDeletable = function(game) {
+            var username = localStorage.getItem("user.username");
+
+            if (game.state !== "playing"
+                && game.createdBy._id === username) {
+
+                return true;
+            }
+
+            return false;
+        }
+
+        function playerCollectionContains(collection, item) { // Determine if player e-mail address is in game players collection.
+            for (var i = 0; i < collection.length; i++) {
+                if (collection[i]._id === item) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // PAGE LOAD

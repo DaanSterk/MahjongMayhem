@@ -67,8 +67,10 @@
                         </td>
                         <td class="text-capitalize">{{ game.state }}</td>
                         <td>
-                            <div class="btn-group">
-                                <button ng-if="game.state === 'open'" ng-click="joinGame(game.id)" class="btn btn-success">Join game</button>
+                            <div class="btn-group action-buttons">
+                                <button ng-if="isJoinable(game)" ng-click="joinGame(game.id)" class="btn btn-primary">Join</button>
+                                <button ng-if="isStartable(game)" ng-click="startGame(game.id)" class="btn btn-success">Start</button>
+                                <button ng-if="isDeletable(game)" ng-click="deleteGame(game.id)" class="btn btn-danger">Delete</button>
                             </div>
                         </td>
                     </tr>
