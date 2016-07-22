@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 		   // This copies all the html and css into the dist/ folder
 		   expand: true,
 		   cwd: 'app/',
-		   src: ['**/*.html'],
+		   src: ['**/*.html', '**/*.png'],
 		   dest: 'dist/'
 		}
    },
@@ -32,6 +32,10 @@ module.exports = function(grunt) {
      css: {
        files: 'app/**/*.scss',
        tasks: 'sass'
+     },
+     img: {
+       files: 'app/**/*.png',
+       tasks: 'copy'
      }
    },
    'http-server': {

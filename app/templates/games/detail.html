@@ -1,3 +1,6 @@
 <div ng-controller="GameCtrl">
-
+    <img ng-repeat="tile in tiles"
+         src="../../img/tiles_spritesheet.png"
+         class="tile tile-{{ tile.tile.name }}"
+         style="left: {{ tile.xPos * 36.5 }}; top: {{ tile.yPos * 45 }}; z-index: {{ tile.zPos }}"/>
 </div>
