@@ -5,6 +5,7 @@ angular.module('MahjongMayhem')
         function getTiles(gameid) {
             if (!gameid) { // Na een refresh vervalt het game id. Terug gaan naar /games.
                 $state.go("games");
+                return;
             }
             $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
                 .then(function(response) {
