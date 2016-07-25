@@ -15,6 +15,8 @@ angular.module('MahjongMayhem').controller('ThemeCtrl', ['$scope', function($sco
                 _self.settings.container.removeClass().addClass(theme);
                 _self.settings.buttons.removeAttr('disabled');
                 $node.attr('disabled', true);
+
+                localStorage.setItem('theme', theme);
             });
         }
     };
