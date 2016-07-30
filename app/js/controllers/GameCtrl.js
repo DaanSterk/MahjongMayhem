@@ -1,7 +1,7 @@
 angular.module('MahjongMayhem')
     .controller('GameCtrl', ['$scope', '$state', '$http', 'GLOBALS', function($scope, $state, $http, GLOBALS) {
         var id;
-        var firstSelectedTile;
+        var firstSelectedTile = {"tile": {"id": 0} };
 
         function getTiles(gameid) {
             if (!gameid) { // Na een refresh vervalt het game id. Terug gaan naar /games.
@@ -18,7 +18,7 @@ angular.module('MahjongMayhem')
         getTiles(id);
 
         $scope.isTheTileSelected = function (tileId){
-            return tileId === firstSelectedTile.tile.id ? "SelectedTile" : "notSelectedTile";
+            return tileId === firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
         };
 
         $scope.selectTile = function(selectedTile){

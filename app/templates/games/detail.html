@@ -1,7 +1,7 @@
 <div ng-controller="GameCtrl">
     <div ng-repeat="tile in tiles"
          class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
-         ng-click="isTheTileSelected(tile.tile.id)"
-         ng-class="canTheTileBeSelected(tile)"
+         ng-click="selectTile(tile)"
+         ng-class="isTheTileSelected(tile.tile.id)"
          style="left: {{ tile.xPos * 36 }}; top: {{ tile.yPos * 45 }}; z-index: {{ tile.zPos }}"/>
 </div>
