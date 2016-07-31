@@ -10,9 +10,26 @@ angular.module('MahjongMayhem')
             }
             $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
                 .then(function(response) {
-                    $scope.tiles = response.data;
+                    splitTiles(response.data);
                 });
         }
+
+        function splitTiles(data){
+            var tiles = [];
+            var matchedTiles = [];
+
+            data.forEach(function (tile) {
+                if(tile.match){
+                    matchedTiles.push(tile);
+                } else {
+                    tiles.push(tile);
+                }
+            });
+
+            $scope.tiles = tiles;
+            $scope.matchedTiles = matchedTiles;
+        }
+
         // Page load
         id = $state.params.id;
         getTiles(id);
