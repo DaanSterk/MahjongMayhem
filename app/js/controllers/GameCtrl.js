@@ -23,12 +23,10 @@ angular.module('MahjongMayhem')
 
         $scope.selectTile = function(selectedTile){
             if(canTheTileBeSelected(selectedTile)){
-                if(isTileFromTheSameType(selectedTile)){
-                    alert("ja");
-                }
-                else{
+                if(!isTileFromTheSameType(selectedTile)){
                     firstSelectedTile = selectedTile;
-                    alert("nee");
+                } else{
+                    matchTile(id, firstSelectedTile._id, selectedTile._id)
                 }
             }
         };
@@ -85,13 +83,24 @@ angular.module('MahjongMayhem')
 
         function isTileFromTheSameType(selectedTile){
             var sameType = false;
-            // $scope.tiles.forEach(function (tile) {
             if(firstSelectedTile) {
-                if (firstSelectedTile.tile.suit == selectedTile.tile.suit && firstSelectedTile.tile.name == selectedTile.tile.name && firstSelectedTile.tile.id != selectedTile.tile.id) {
+                if (firstSelectedTile.tile.suit == selectedTile.tile.suit &&
+                    ((firstSelectedTile.tile.matchesWholeSuit == false && selectedTile.tile.matchesWholeSuit == false) || firstSelectedTile.tile.name == selectedTile.tile.name) &&
+                    firstSelectedTile.tile.id != selectedTile.tile.id) {
                     sameType = true;
                 }
             }
-            // });
             return sameType;
         }
+
+        function matchTile(gameId, firstTileId, secondTileId) {
+            return $http({
+                method: 'POST',
+                url: GLOBALS.API_URL + '/Games/' + gameId + '/Tiles/matches',
+                data: { tile1Id: firstTileId, tile2Id: secondTileId }
+            }).then(function successCallback(response){
+                console.log(response);
+                return response;
+            });
+        };
     }])
