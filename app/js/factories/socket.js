@@ -1,27 +1,15 @@
-angular.module('MahjongMayhem').factory('socket', function () {
+angular.module('MahjongMayhem').factory('gameSocket', function (GLOBALS) {
     return {
-        connect: connect,
-        match: match,
-        finished: finished
+        connect: connect
     };
 
     var socket;
 
     function connect(gameId) {
         if (io) {
-            socket = io.connect('http://mahjongmayhem.herokuapp.com?gameId=' + gameId);
+            console.log("connect");
+            socket = io.connect(GLOBALS.API_URL + "?gameId=" + gameId);
         }
     }
 
-    function match(callback) {
-        socket.on("match", function (data) {
-            if (callback) callback(data);
-        });
-    }
-
-    function gameover(callback) {
-        socket.on("gameover", function (data) {
-            if (callback) callback(data);
-        });
-    }
 });

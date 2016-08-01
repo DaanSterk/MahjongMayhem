@@ -1,7 +1,14 @@
 angular.module('MahjongMayhem')
-    .controller('GameCtrl', ['$scope', '$state', '$http', 'GLOBALS', function($scope, $state, $http, GLOBALS) {
+    .controller('GameCtrl', ['$scope', '$state', '$http', 'GLOBALS', 'gameSocket', function($scope, $state, $http, GLOBALS, gameSocket) {
         var id;
         var firstSelectedTile = {"tile": {"id": 0} };
+        var gameOver;
+
+        // Page load
+        id = $state.params.id;
+        getTiles(id);
+
+        gameSocket.connect(id);
 
         function getTiles(gameid) {
             if (!gameid) { // Na een refresh vervalt het game id. Terug gaan naar /games.
@@ -29,10 +36,6 @@ angular.module('MahjongMayhem')
             $scope.tiles = tiles;
             $scope.matchedTiles = matchedTiles;
         }
-
-        // Page load
-        id = $state.params.id;
-        getTiles(id);
 
         $scope.isTheTileSelected = function (tileId){
             return tileId === firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
