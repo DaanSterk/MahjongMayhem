@@ -1,5 +1,5 @@
 angular.module('MahjongMayhem')
-    .controller('GameCtrl', ['$scope', '$state', '$http', 'GLOBALS', 'gameSocket', function($scope, $state, $http, GLOBALS, gameSocket) {
+    .controller('GameCtrl', ['$scope', '$state', '$http', 'GLOBALS', 'gameSocket',  function($scope, $state, $http, GLOBALS, gameSocket) {
         var id;
         var firstSelectedTile = {"tile": {"id": 0} };
         var gameOver;
@@ -17,28 +17,33 @@ angular.module('MahjongMayhem')
             }
             $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
                 .then(function(response) {
-                    splitTiles(response.data);
+                    $scope.tiles = response.data;
+                    //splitTiles(response.data);
                 });
         }
 
-        function splitTiles(data){
-            var tiles = [];
-            var matchedTiles = [];
-
-            data.forEach(function (tile) {
-                if(tile.match){
-                    matchedTiles.push(tile);
-                } else {
-                    tiles.push(tile);
-                }
-            });
-
-            $scope.tiles = tiles;
-            $scope.matchedTiles = matchedTiles;
-        }
+        // function splitTiles(data){
+        //     var tiles = [];
+        //     var matchedTiles = [];
+        //
+        //     data.forEach(function (tile) {
+        //         if(tile.match){
+        //             matchedTiles.push(tile);
+        //         } else {
+        //             tiles.push(tile);
+        //         }
+        //     });
+        //
+        //     $scope.tiles = tiles;
+        //     $scope.matchedTiles = matchedTiles;
+        // }
 
         $scope.isTheTileSelected = function (tileId){
             return tileId === firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
+        };
+
+        $scope.isEvenOrOddRow = function (index){
+            return index % 2 == 0 ? "even" : "odd";
         };
 
         $scope.selectTile = function(selectedTile){

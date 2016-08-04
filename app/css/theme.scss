@@ -1,24 +1,23 @@
-$themes: (
-  default: #2b81af,
-  banana: #f1c40f,
-  cherry: #c0392b,
-  blueberry: #8e44ad,
-  leaf: #27ae60,
-  nightsky: #2980b9
-);
+@import "variables";
+
+#theme-controls{
+  margin-top: 30px;
+}
+
+#theme-control-container{
+  margin-left: 5px;
+}
+
+#theme-control-container > button {
+  color: white;
+  font-weight: bold;
+}
 
 @mixin theme($name, $color) {
   .#{$name} {
     #navbar {
       background-color: $color;
       border-color: darken($color, 10%);
-    }
-
-    .selected-tile {
-      border-style: solid;
-      border-radius: 9px;
-      border: 5px solid $color;
-      padding: 0px 0px 10px 10px;
     }
   }
 
@@ -37,17 +36,4 @@ $themes: (
 
 @each $key, $value in $themes {
   @include theme($key, $value);
-}
-
-#theme-controls{
-  margin-top: 30px;
-}
-
-#theme-control-container{
-  margin-left: 5px;
-}
-
-#theme-control-container > button {
-  color: white;
-  font-weight: bold;
 }
