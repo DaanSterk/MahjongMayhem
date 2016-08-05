@@ -1,5 +1,5 @@
 angular.module('MahjongMayhem')
-    .controller('GameCtrl', ['$scope', '$state', '$http', 'GLOBALS', 'gameSocket',  function($scope, $state, $http, GLOBALS, gameSocket) {
+    .controller('GameCtrl', ['$scope', '$state', '$http', '$filter', 'GLOBALS', 'gameSocket',  function($scope, $state, $http, $filter, GLOBALS, gameSocket) {
         var id;
         var firstSelectedTile = {"tile": {"id": 0} };
         var gameOver;
@@ -68,7 +68,7 @@ angular.module('MahjongMayhem')
             var y = selectedTile.yPos;
             var z = selectedTile.zPos;
 
-            $scope.tiles.forEach(function (tile) {
+            $filter('hasNoMatch')($scope.tiles).forEach(function (tile) {
                 if(tile.tile.id != id) {
                     if (tile.zPos > z &&
                         tile.xPos >= x - 1 && tile.xPos <= x + 1 &&
@@ -110,7 +110,7 @@ angular.module('MahjongMayhem')
             var sameType = false;
             if(firstSelectedTile) {
                 if (firstSelectedTile.tile.suit == selectedTile.tile.suit &&
-                    ((firstSelectedTile.tile.matchesWholeSuit == false && selectedTile.tile.matchesWholeSuit == false) || firstSelectedTile.tile.name == selectedTile.tile.name) &&
+                    ((firstSelectedTile.tile.matchesWholeSuit && selectedTile.tile.matchesWholeSuit) || firstSelectedTile.tile.name == selectedTile.tile.name) &&
                     firstSelectedTile.tile.id != selectedTile.tile.id) {
                     sameType = true;
                 }
