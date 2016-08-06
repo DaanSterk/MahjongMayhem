@@ -68,7 +68,7 @@ angular.module('MahjongMayhem')
         $scope.isJoinable = function(game) {
             var username = localStorage.getItem("user.username");
 
-            if (game.state === "playing"
+            if (game.state !== "open"
                 || username === null
                 || game.createdBy._id === username
                 || game.players.length === game.maxPlayers
@@ -132,6 +132,14 @@ angular.module('MahjongMayhem')
             return true;
         }
 
+        $scope.isSpectatable = function(game) {
+            if (game.state === 'open') {
+                return false;
+            }
+
+            return true;
+        }
+
         $scope.spectateGame = function(gameid) {
             $state.go("game", { id: gameid, spectatorMode: true });
         }
@@ -142,6 +150,7 @@ angular.module('MahjongMayhem')
                     return true;
                 }
             }
+
             return false;
         }
 
