@@ -1,43 +1,38 @@
 <div ng-controller="GameCtrl">
     <div ng-cloak="" class="tabsdemoDynamicHeight">
-            <!-- Nav tabs -->
-            <!--<ul class="nav nav-tabs" role="tablist">-->
-                <!--<li role="presentation" class="active"><a href="#board" role="tab" data-toggle="tab">Game Board</a></li>-->
-                <!--<li role="presentation"><a href="#moves" role="tab" data-toggle="tab">Moves</a></li>-->
-            <!--</ul>-->
-            <!-- Tab panes -->
-            <!--<div class="tab-content">-->
-                <!--<div role="tabpanel" class="tab-pane active" id="board">-->
-                    <div ng-repeat="tile in tiles | hasNoMatch"
-                         class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
-                         ng-click="selectTile(tile)"
-                         ng-class="isTheTileSelected(tile.tile.id)"
-                         title="{{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
-                         style="left: {{ tile.xPos * 36 }}; top: {{ tile.yPos * 45 }}; z-index: {{ tile.zPos }}"/>
-
-                    <!--<div ng-repeat="tile in tiles | hasAMatch | removeSameTiles | orderBy: tile.match.foundOn">-->
-                        <!--<div class="matched-tile-row" ng-class="isEvenOrOddRow($index)">-->
-                            <!--<div class="matched-tile-image-container">-->
-                                <!--<div title="{{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"-->
-                                     <!--class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"/>-->
-                            <!--</div>-->
-                            <!--<div class="matched-tile-information-container">-->
-                                <!--<h4>Tile: {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}</h4>-->
-                                <!--<p>By: {{tile.match.foundBy}}</p>-->
-                                <!--<p>On: {{tile.match.foundOn}}</p>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--<div/>-->
-
-                <!--</div>-->
-                <!--<div role="tabpanel" class="tab-pane" id="moves">-->
-                    <!--<div ng-repeat="tile in tiles | filter: {match: '!!'}"-->
-                    <!--class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"-->
-                    <!--title="{{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"-->
-                    <!--/>-->
-                <!--</div>-->
+        <div class="board-container">
+            <div ng-repeat="tile in tiles | hasNoMatch"
+                 class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
+                 ng-click="selectTile(tile)"
+                 ng-class="isTheTileSelected(tile.tile.id)"
+                 title="{{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
+                 style="left: {{ tile.xPos * 36 }}; top: {{ tile.yPos * 45 }}; z-index: {{ tile.zPos }}">
             </div>
+        </div>
 
+        <div class="matched-tiles-container">
+            <div class="matched-tile-row odd">
+                <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+                      </span>
+                    <input type="text" class="form-control" placeholder="Search matched tiles" ng-model="searchMatchedTile">
+                </div>
+            </div>
+            <div ng-repeat="tile in tiles | hasAMatch | removeSameTiles | orderBy: tile.match.foundOn | filter: searchMatchedTile">
+                <div class="matched-tile-row" ng-class="isEvenOrOddRow($index)">
+                    <div class="matched-tile-image-container">
+                        <div title="{{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
+                             class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}">
+                        </div>
+                    </div>
+                    <div class="matched-tile-information-container">
+                        <h4>Tile: {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}</h4>
+                        <p>By: {{tile.match.foundBy}}</p>
+                        <p>On: {{tile.match.foundOn}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

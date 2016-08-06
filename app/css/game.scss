@@ -1,5 +1,18 @@
 @import "variables";
 
+.board-container{
+  width: 750px;
+}
+
+.matched-tiles-container{
+  position: absolute;
+  right: 50px;
+  top: 50px;
+  width: 500px;
+  height: 850px;
+  overflow-y: auto;
+}
+
 .matched-tile-information-container{
   margin-left: 100px;
 }
