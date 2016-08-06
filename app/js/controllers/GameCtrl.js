@@ -2,13 +2,16 @@ angular.module('MahjongMayhem')
     .controller('GameCtrl', ['$scope', '$state', '$http', '$filter', 'GLOBALS', 'gameSocket',  function($scope, $state, $http, $filter, GLOBALS, gameSocket) {
         var id;
         var firstSelectedTile = {"tile": {"id": 0} };
-        var gameOver;
 
         // Page load
         id = $state.params.id;
         getTiles(id);
 
         gameSocket.connect(id);
+
+        gameSocket.match(function(tiles){
+            removeTiles(tiles);
+        });
 
         function getTiles(gameid) {
             if (!gameid) { // Na een refresh vervalt het game id. Terug gaan naar /games.
@@ -18,25 +21,8 @@ angular.module('MahjongMayhem')
             $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
                 .then(function(response) {
                     $scope.tiles = response.data;
-                    //splitTiles(response.data);
                 });
         }
-
-        // function splitTiles(data){
-        //     var tiles = [];
-        //     var matchedTiles = [];
-        //
-        //     data.forEach(function (tile) {
-        //         if(tile.match){
-        //             matchedTiles.push(tile);
-        //         } else {
-        //             tiles.push(tile);
-        //         }
-        //     });
-        //
-        //     $scope.tiles = tiles;
-        //     $scope.matchedTiles = matchedTiles;
-        // }
 
         $scope.isTheTileSelected = function (tileId){
             return tileId === firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
@@ -124,8 +110,17 @@ angular.module('MahjongMayhem')
                 url: GLOBALS.API_URL + '/Games/' + gameId + '/Tiles/matches',
                 data: { tile1Id: firstTileId, tile2Id: secondTileId }
             }).then(function successCallback(response){
-                console.log(response);
                 return response;
             });
         };
+
+        function removeTiles(tiles) {
+            console.log("RemoveTiles:");
+            console.log(tiles);
+            tiles.forEach(function (tile) {
+                $("#tile-" + tile.tile).remove();
+            });
+        };
+
+
     }])
