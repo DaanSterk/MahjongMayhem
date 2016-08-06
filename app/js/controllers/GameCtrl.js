@@ -1,10 +1,13 @@
 angular.module('MahjongMayhem')
     .controller('GameCtrl', ['$scope', '$state', '$http', '$filter', 'GLOBALS', 'gameSocket',  function($scope, $state, $http, $filter, GLOBALS, gameSocket) {
         var id;
+        var spectatorMode;
         var firstSelectedTile = {"tile": {"id": 0} };
 
         // Page load
         id = $state.params.id;
+        spectatorMode = $state.params.spectatorMode;
+
         getTiles(id);
 
         gameSocket.connect(id);
