@@ -10,7 +10,16 @@
   top: 50px;
   width: 500px;
   height: 850px;
+  overflow: hidden;
+}
+
+.matched-tiles-container .matched-tiles{
   overflow-y: auto;
+  height: 755px;
+}
+
+.matched-tiles-container .matched-tiles{
+  position: relative;
 }
 
 .matched-tile-information-container{
@@ -18,7 +27,7 @@
 }
 
 .matched-tile-row{
-  padding: 20px 30px 30px 30px;
+  padding: 20px 30px 20px 30px;
 }
 
 @mixin game($name, $color) {
