@@ -36,7 +36,8 @@ angular.module("MahjongMayhem")
         .state('game', {
             url: "/games/game",
             params: {
-                id: null
+                id: null,
+                spectatorMode: false
             },
             templateUrl: "templates/games/detail"
         })

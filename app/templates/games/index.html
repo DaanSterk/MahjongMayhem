@@ -68,6 +68,7 @@
                         <td class="text-capitalize">{{ game.state }}</td>
                         <td>
                             <div class="btn-group action-buttons">
+                                <button ng-click="spectateGame(game.id)" class="btn btn-info">Spectate</button>
                                 <button ng-if="isJoinable(game)" ng-click="joinGame(game.id)" class="btn btn-primary">Join</button>
                                 <button ng-if="isStartable(game)" ng-click="startGame(game.id)" class="btn btn-info">Start</button>
                                 <button ng-if="isPlayable(game)" ng-click="playGame(game.id)" class="btn btn-success">Play</button>
