@@ -115,12 +115,8 @@ angular.module('MahjongMayhem')
         };
 
         function removeTiles(tiles) {
-            console.log("RemoveTiles:");
-            console.log(tiles);
             tiles.forEach(function (tile) {
                 $("#tile-" + tile.tile).remove();
             });
         };
-
-
     }])

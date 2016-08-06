@@ -15,7 +15,6 @@ angular.module('MahjongMayhem').factory('gameSocket', function (GLOBALS) {
 
     function match(callback){
         socket.on("match", function(data){
-            console.log("test");
             if(callback) callback(data);
         });
     }
