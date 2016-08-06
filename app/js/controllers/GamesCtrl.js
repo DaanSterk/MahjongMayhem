@@ -132,6 +132,10 @@ angular.module('MahjongMayhem')
             return true;
         }
 
+        $scope.spectateGame = function(gameid) {
+            $state.go("game", { id: gameid, spectatorMode: true });
+        }
+
         function playerCollectionContains(collection, item) { // Determine if player e-mail address is in game players collection.
             for (var i = 0; i < collection.length; i++) {
                 if (collection[i]._id === item) {
