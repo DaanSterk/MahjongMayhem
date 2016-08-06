@@ -1,0 +1,56 @@
+@import "variables";
+
+.board-container{
+  width: 750px;
+}
+
+.matched-tiles-container{
+  position: absolute;
+  right: 50px;
+  top: 50px;
+  width: 500px;
+  height: 850px;
+  overflow: hidden;
+}
+
+.matched-tiles-container .matched-tiles{
+  overflow-y: auto;
+  height: 755px;
+}
+
+.matched-tiles-container .matched-tiles{
+  position: relative;
+}
+
+.matched-tile-information-container{
+  margin-left: 100px;
+}
+
+.matched-tile-row{
+  padding: 20px 30px 20px 30px;
+}
+
+@mixin game($name, $color) {
+  .#{$name} {
+    .selected-tile {
+      border-style: solid;
+      border-radius: 9px;
+      border: 5px solid $color;
+      padding: 0px 0px 10px 10px;
+    }
+
+    .matched-tile-row.even{
+      background-color: lighten($color, 50%);
+      border: 2px solid lighten($color, 30%);
+    }
+
+    .matched-tile-row.odd{
+      background-color: lighten($color, 40%);
+      border: 2px solid lighten($color, 30%);
+    }
+  }
+}
+
+@each $key, $value in $themes {
+  @include game($key, $value);
+}
