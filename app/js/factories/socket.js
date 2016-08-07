@@ -1,6 +1,7 @@
 angular.module('MahjongMayhem').factory('gameSocket', function (GLOBALS) {
     return {
-        connect: connect
+        connect: connect,
+        match: match
     };
 
     var socket;
@@ -10,6 +11,12 @@ angular.module('MahjongMayhem').factory('gameSocket', function (GLOBALS) {
             console.log("connect");
             socket = io.connect(GLOBALS.API_URL + "?gameId=" + gameId);
         }
+    }
+
+    function match(callback){
+        socket.on("match", function(data){
+            if(callback) callback(data);
+        });
     }
 
 });

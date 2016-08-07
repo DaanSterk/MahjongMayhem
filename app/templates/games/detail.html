@@ -2,6 +2,7 @@
     <div ng-cloak="" class="tabsdemoDynamicHeight">
         <div class="board-container">
             <div ng-repeat="tile in tiles | hasNoMatch"
+                 id="tile-{{tile.tile.id}}"
                  class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
                  ng-click="selectTile(tile)"
                  ng-class="isTheTileSelected(tile.tile.id)"
