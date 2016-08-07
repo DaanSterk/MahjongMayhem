@@ -14,6 +14,7 @@ angular.module('MahjongMayhem')
 
         gameSocket.match(function(tiles){
             removeTiles(tiles);
+            console.log(matchesLeft());
         });
 
         function getTiles(gameid) {
@@ -24,6 +25,7 @@ angular.module('MahjongMayhem')
             $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
                 .then(function(response) {
                     $scope.tiles = response.data;
+                    console.log(matchesLeft());
                 });
         }
 
@@ -126,4 +128,42 @@ angular.module('MahjongMayhem')
                 $("#tile-" + tile.tile).remove();
             });
         };
+
+        function matchesLeft() {
+            var selectableTiles = new Array();
+            for (var i = 0; i < $scope.tiles.length; i++) {
+                if (canTheTileBeSelected($scope.tiles[i])) {
+                    selectableTiles.push($scope.tiles[i].tile);
+                }
+            }
+
+            console.log(selectableTiles);
+
+            for (var i = 0; i < selectableTiles.length; i++) {
+                for (var j = 0; j < selectableTiles.length; j++) {
+                    var a = selectableTiles[i];
+                    var b = selectableTiles[j];
+
+                    if (a.id !== b.id) {
+                        if (a.matchesWholeSuit && b.matchesWholeSuit) {
+                            if (a.suit === b.suit) {
+                                console.log(a);
+                                console.log(b);
+                                return true;
+                            }
+                        }
+                        else if (a.suit === b.suit) {
+                            if (a.name === b.name) {
+                                console.log(a);
+                                console.log(b);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
     }])
