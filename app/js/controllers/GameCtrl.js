@@ -46,6 +46,10 @@ angular.module('MahjongMayhem')
         };
 
         function canTheTileBeSelected(selectedTile) {
+            if (spectatorMode) {
+                return false;
+            }
+
             var canBeSelected = true,
                 tileAbove = false,
                 tileRight = false,
