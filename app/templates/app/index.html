@@ -1,8 +1,19 @@
-<div ng-controller="AppCtrl">
+<div>
     <div class="container">
         <div id="welcome-box" class="center">
             <h1 class="text-center">{{ welcome_msg }}</h1>
             <button class="btn center" ng-click="showView('games')">Click here to play</button>
+            <section id="theme-controls" class="controls" ng-controller="ThemeCtrl">
+                <h4 class="text-center">Change theme:</h4>
+                <div id="theme-control-container">
+                    <button class="controls btn" data-theme="default">Default</button>
+                    <button class="controls btn" data-theme="banana">Funny banana</button>
+                    <button class="controls btn" data-theme="cherry">Hot cherry</button>
+                    <button class="controls btn" data-theme="blueberry">Deep purple</button>
+                    <button class="controls btn" data-theme="leaf">Smooth leaf</button>
+                    <button class="controls btn" data-theme="nightsky">Night sky</button>
+                </div>
+            </section>
         </div>
     </div>
 </div>

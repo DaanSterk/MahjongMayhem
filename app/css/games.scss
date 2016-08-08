@@ -10,13 +10,13 @@
 
 #games-table {
   td {
-    width: 25%;
+    width: 20%;
 
     line-height: 35px;
   }
 }
 
-.search-row {
+#search-row {
   border-top: 3px solid lightgrey;
   border-bottom: 3px solid lightgrey;
   padding-bottom: 10px;
@@ -36,4 +36,13 @@
   &:hover {
     background-color: #FFF !important;
   }
+}
+
+#btn-new-game {
+  width: 250px;
+  margin-bottom: 25px;
+}
+
+.action-buttons button {
+  width: 80px;
 }

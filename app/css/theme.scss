@@ -1,0 +1,43 @@
+@import "variables";
+
+#theme-controls{
+  margin-top: 30px;
+}
+
+#theme-control-container{
+  margin-left: 5px;
+}
+
+#theme-control-container > button {
+  color: white;
+  font-weight: bold;
+}
+
+@mixin theme($name, $color) {
+  .#{$name} {
+    #navbar {
+      background-color: $color;
+      border-color: darken($color, 10%);
+    }
+  }
+
+  .banana{
+    font-size: $fontsize * 1.4;
+  }
+
+  [data-theme='#{$name}'] {
+    background: $color;
+
+    &:hover {
+      background: darken($color, 10%);
+    }
+
+    &[disabled] {
+      background: desaturate($color, 40%);
+    }
+  }
+}
+
+@each $key, $value in $themes {
+  @include theme($key, $value);
+}

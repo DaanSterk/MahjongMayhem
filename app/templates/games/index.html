@@ -1,6 +1,6 @@
 <div ng-controller="GamesCtrl">
     <div class="container">
-        <div class="row search-row">
+        <div id="search-row" class="row">
             <table id="search-table">
                 <tr>
                     <td>
@@ -46,6 +46,7 @@
                         <th>Created by</th>
                         <th>Player info</th>
                         <th>State</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,9 +66,21 @@
                             </div>
                         </td>
                         <td class="text-capitalize">{{ game.state }}</td>
+                        <td>
+                            <div class="btn-group action-buttons">
+                                <button ng-if="isSpectatable(game)" ng-click="spectateGame(game.id)" class="btn btn-secondary">Spectate</button>
+                                <button ng-if="isJoinable(game)" ng-click="joinGame(game.id)" class="btn btn-primary">Join</button>
+                                <button ng-if="isStartable(game)" ng-click="startGame(game.id)" class="btn btn-success">Start</button>
+                                <button ng-if="isPlayable(game)" ng-click="playGame(game.id)" class="btn btn-success">Play</button>
+                                <button ng-if="isDeletable(game)" ng-click="deleteGame(game.id)" class="btn btn-danger">Delete</button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="row">
+            <button id="btn-new-game" ng-click="showView('newgame')" class="btn center">New game</button>
         </div>
     </div>
 </div>
