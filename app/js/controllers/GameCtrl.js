@@ -13,7 +13,8 @@ angular.module('MahjongMayhem')
         gameSocket.connect(id);
 
         gameSocket.match(function(tiles){
-            removeTiles(tiles);
+            //removeTiles(tiles);
+            getTiles(id);
         });
 
         function getTiles(gameid) {
@@ -40,7 +41,8 @@ angular.module('MahjongMayhem')
                 if(!isTileFromTheSameType(selectedTile)){
                     firstSelectedTile = selectedTile;
                 } else{
-                    matchTile(id, firstSelectedTile._id, selectedTile._id)
+                    removeTiles([{tile: firstSelectedTile.tile.id}, {tile: selectedTile.tile.id}]);
+                    matchTile(id, firstSelectedTile._id, selectedTile._id);
                 }
             }
         };
@@ -119,11 +121,11 @@ angular.module('MahjongMayhem')
             }).then(function successCallback(response){
                 return response;
             });
-        };
+        }
 
         function removeTiles(tiles) {
             tiles.forEach(function (tile) {
                 $("#tile-" + tile.tile).remove();
             });
-        };
+        }
     }])
