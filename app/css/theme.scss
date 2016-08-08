@@ -21,6 +21,10 @@
     }
   }
 
+  .banana{
+    font-size: $fontsize * 1.4;
+  }
+
   [data-theme='#{$name}'] {
     background: $color;
 
