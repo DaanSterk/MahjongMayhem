@@ -1,5 +1,5 @@
 angular.module('MahjongMayhem')
-    .controller('GameCtrl', ['$scope', '$state', '$http', '$filter', 'GLOBALS', 'gameSocket',  function($scope, $state, $http, $filter, GLOBALS, gameSocket) {
+    .controller('GameCtrl', ['$scope', '$state', '$filter', 'gameService', 'gameSocket',  function($scope, $state, $filter, gameService, gameSocket) {
         var id;
         var spectatorMode;
         var firstSelectedTile = {"tile": {"id": 0} };
@@ -17,15 +17,14 @@ angular.module('MahjongMayhem')
             getTiles(id);
         });
 
-        function getTiles(gameid) {
-            if (!gameid) { // Na een refresh vervalt het game id. Terug gaan naar /games.
+        function getTiles(gameId) {
+            if (!gameId) { // Na een refresh vervalt het game id. Terug gaan naar /games.
                 $state.go("games");
                 return;
             }
-            $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
-                .then(function(response) {
-                    $scope.tiles = response.data;
-                });
+            gameService.getTiles(gameId).then(function (response) {
+                $scope.tiles = response;
+            });
         }
 
         $scope.isTheTileSelected = function (tileId){
@@ -114,13 +113,7 @@ angular.module('MahjongMayhem')
         }
 
         function matchTile(gameId, firstTileId, secondTileId) {
-            return $http({
-                method: 'POST',
-                url: GLOBALS.API_URL + '/Games/' + gameId + '/Tiles/matches',
-                data: { tile1Id: firstTileId, tile2Id: secondTileId }
-            }).then(function successCallback(response){
-                return response;
-            });
+            gameService.matchTile(gameId, firstTileId, secondTileId);
         }
 
         function removeTiles(tiles) {
