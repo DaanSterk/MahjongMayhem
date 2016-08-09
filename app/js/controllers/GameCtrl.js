@@ -22,9 +22,10 @@ angular.module('MahjongMayhem')
                 $state.go("games");
                 return;
             }
-            gameService.getTiles(gameId).then(function (response) {
-                $scope.tiles = response;
-            });
+            gameService.getTiles(gameId)
+                .then(function (responseData) {
+                    $scope.tiles = responseData;
+                });
         }
 
         $scope.isTheTileSelected = function (tileId){

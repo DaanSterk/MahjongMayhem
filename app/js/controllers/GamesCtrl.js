@@ -1,5 +1,5 @@
 angular.module('MahjongMayhem')
-    .controller('GamesCtrl', ['$scope', '$state', '$http', 'GLOBALS', function($scope, $state, $http, GLOBALS) {
+    .controller('GamesCtrl', ['$scope', '$state', 'gamesService', function($scope, $state, gamesService) {
 
         // -----DEFAULT------
         $scope.pageSize = 100;
@@ -43,25 +43,23 @@ angular.module('MahjongMayhem')
 
         var filter;
         getGames = function() {
-            var queryStringBase = '?pageSize=' + $scope.pageSize + '&pageIndex=' + $scope.pageIndex;
-            $http.get(GLOBALS.API_URL + '/games/' + queryStringBase + filter)
-                .then(function(response) {
-                    $scope.games = response.data;
+            gamesService.getGames($scope.pageSize, $scope.pageIndex, filter)
+                .then(function (responseData) {
+                    $scope.games = responseData;
                 });
         }
 
         $scope.newGame = function() {
-            $http.post(GLOBALS.API_URL + '/games', $scope.game)
+            gamesService.newGame($scope.game)
                 .then(function(response) {
                     $state.go('games');
-            });
+                });
         }
 
-        $scope.joinGame = function(gameid) {
-            $http.post(GLOBALS.API_URL + '/games/' + gameid + '/players', {})
-                .then(function(response) {
+        $scope.joinGame = function(gameId) {
+            gamesService.joinGame(gameId)
+                .then(function () {
                     $state.reload();
-                    // $state.go("game", { id : gameid });
                 });
         }
 
@@ -79,9 +77,9 @@ angular.module('MahjongMayhem')
             return true;
         }
 
-        $scope.startGame = function(gameid) {
-            $http.post(GLOBALS.API_URL + '/games/' + gameid + '/start', {})
-                .then(function(response) {
+        $scope.startGame = function(gameId) {
+            gamesService.startGame(gameId)
+                .then(function (response) {
                     $state.reload();
                 });
         }
@@ -98,9 +96,9 @@ angular.module('MahjongMayhem')
             return true;
         }
 
-        $scope.deleteGame = function(gameid) {
-            $http.delete(GLOBALS.API_URL + '/games/' + gameid, {})
-                .then(function(response) {
+        $scope.deleteGame = function(gameId) {
+            gamesService.deleteGame(gameId)
+                .then(function (response) {
                     $state.reload();
                 });
         }
