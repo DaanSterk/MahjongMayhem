@@ -1,52 +1,111 @@
-/*
- *   TODO: Change this test to a real test
- *   Dit is een voorbeeldtest
- */
-describe("PersonController", function() {
-    var personController;
-    var personService;
+describe("GameCtrl", function() {
+    var gameController;
+    var gameService;
     var createNewController;
     var httpBackend;
     var scope;
 
     // initialize the app
-    beforeEach(module('myApp'));
+    beforeEach(module('MahjongMayhem'));
 
     // Inject the modules and get them in global variables
     beforeEach(inject(function($rootScope, $controller, $httpBackend, $injector){
         // The scope for the controller
         scope = $rootScope.$new();
         // Get the service which will be injected
-        personService = $injector.get('PersonService');
+        gameService = $injector.get('gameService');
         // For mocking the backend
         httpBackend = $httpBackend;
 
-        // Stubbing with sinon
-        personService.sayHello = sinon.stub();
-        personService.sayHello.withArgs('Martijn').returns('Stub says hi Martijn');
-        personService.sayHello.returns('Hi from stub');
-
         // This is the controller we're going to test
-        personController = $controller('PersonController', { $scope: scope });
+        gameController = $controller('GameCtrl', { $scope: scope });
     }));
 
-    it('should mock the httpbackend', function(){
-        // Given
-        var person = personService.persons[0];
-        var expectedCode = 'WEBS6';
-        var expectedError = 'Person not found';
-        // Nu expecten we het omdat we in de test zitten.
-        // Bij de before of beforeEach kunnen we ook whenPost stubben
-        httpBackend
-            .expectPOST('http://api.myApp.com/persons/' + person.id + '/courses', { code: expectedCode })
-            .respond(404, { err: expectedError });
+    describe("Testing the GameController", function () {
+        describe("Do the two tiles match", function () {
+            it("Should match, same suit and name", function () {
+                var firstTile = {tile: {tile: {id: 1, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
+                var secondTile = {tile: {tile: {id: 2, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
 
-        // When
-        personController.addCourse(person, expectedCode);
-        httpBackend.flush(); // Voer synchroon uit ipv asynchroon
+                expect(gameController.isTileFromTheSameType(firstTile, secondTile), true);
+            });
 
-        // Then
-        expect(scope.error).to.equal(expectedError);
-        expect(person.courses).to.have.length(0);
+            it("Should not match, different suit and name", function () {
+                var firstTile = {tile: {tile: {id: 1, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
+                var secondTile = {tile: {tile: {id: 2, suit: "circle", name: "3", matchesWholeSuit: false}}};
+
+                expect(gameController.isTileFromTheSameType(firstTile, secondTile), false);
+            });
+
+            it("Should match, same suit", function () {
+                var firstTile = {tile: {tile: {id: 1, suit: "dragon", name: "blue", matchesWholeSuit: true}}};
+                var secondTile = {tile: {tile: {id: 2, suit: "dragon", name: "red", matchesWholeSuit: true}}};
+
+                expect(gameController.isTileFromTheSameType(firstTile, secondTile), true);
+            });
+
+            it("Should not match, same tile", function () {
+                var firstTile = {tile: {tile: {id: 1, suit: "wind", name: "west", matchesWholeSuit: false}}};
+                var secondTile = {tile: {tile: {id: 1, suit: "wind", name: "west", matchesWholeSuit: false}}};
+
+                expect(gameController.isTileFromTheSameType(firstTile, secondTile), false);
+            });
+        });
     });
 });
+
+// describe("GamesCtrl", function() {
+//     var gamesController;
+//     var gamesService;
+//     var createNewController;
+//     var httpBackend;
+//     var scope;
+//
+//     // initialize the app
+//     beforeEach(module('MahjongMayhem'));
+//
+//     // Inject the modules and get them in global variables
+//     beforeEach(inject(function($rootScope, $controller, $httpBackend, $injector){
+//         // The scope for the controller
+//         scope = $rootScope.$new();
+//         // Get the service which will be injected
+//         gameService = $injector.get('gamesService');
+//         // For mocking the backend
+//         httpBackend = $httpBackend;
+//
+//         // This is the controller we're going to test
+//         gameController = $controller('GamesCtrl', { $scope: scope });
+//     }));
+//
+//     describe("Testing the GamesController", function () {
+//         describe("Is the game joinable", function () {
+//             it("Should be able to join", function () {
+//                 var firstTile = {tile: {tile: {id: 1, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
+//                 var secondTile = {tile: {tile: {id: 2, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
+//
+//                 expect(isTileFromTheSameType(firstTile, secondTile), true);
+//             });
+//
+//             it("Should not be able to join", function () {
+//                 var firstTile = {tile: {tile: {id: 1, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
+//                 var secondTile = {tile: {tile: {id: 2, suit: "circle", name: "3", matchesWholeSuit: false}}};
+//
+//                 expect(isTileFromTheSameType(firstTile, secondTile), false);
+//             });
+//
+//             it("Should match, same suit", function () {
+//                 var firstTile = {tile: {tile: {id: 1, suit: "dragon", name: "blue", matchesWholeSuit: true}}};
+//                 var secondTile = {tile: {tile: {id: 2, suit: "dragon", name: "red", matchesWholeSuit: true}}};
+//
+//                 expect(isTileFromTheSameType(firstTile, secondTile), true);
+//             });
+//
+//             it("Should not match, same tile", function () {
+//                 var firstTile = {tile: {tile: {id: 1, suit: "wind", name: "west", matchesWholeSuit: false}}};
+//                 var secondTile = {tile: {tile: {id: 1, suit: "wind", name: "west", matchesWholeSuit: false}}};
+//
+//                 expect(isTileFromTheSameType(firstTile, secondTile), false);
+//             });
+//         });
+//     });
+// });

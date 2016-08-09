@@ -1,20 +1,20 @@
 angular.module('MahjongMayhem')
     .controller('GameCtrl', ['$scope', '$state', '$filter', 'gameService', 'gameSocket',  function($scope, $state, $filter, gameService, gameSocket) {
-        var id;
-        var spectatorMode;
-        var firstSelectedTile = {"tile": {"id": 0} };
+        var ctrl = this;
+        ctrl.boardId;
+        ctrl.spectatorMode;
+        ctrl.firstSelectedTile = {"tile": {"id": 0} };
 
         // Page load
-        id = $state.params.id;
-        spectatorMode = $state.params.spectatorMode;
+        ctrl.boardId = $state.params.id;
+        ctrl.spectatorMode = $state.params.spectatorMode;
 
-        getTiles(id);
+        getTiles(ctrl.boardId);
 
-        gameSocket.connect(id);
+        gameSocket.connect(ctrl.boardId);
 
         gameSocket.match(function(tiles){
-            //removeTiles(tiles);
-            getTiles(id);
+            getTiles(ctrl.boardId);
         });
 
         function getTiles(gameId) {
@@ -29,7 +29,7 @@ angular.module('MahjongMayhem')
         }
 
         $scope.isTheTileSelected = function (tileId){
-            return tileId === firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
+            return tileId === ctrl.firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
         };
 
         $scope.isEvenOrOddRow = function (index){
@@ -37,18 +37,18 @@ angular.module('MahjongMayhem')
         };
 
         $scope.selectTile = function(selectedTile){
-            if(canTheTileBeSelected(selectedTile)){
-                if(!isTileFromTheSameType(selectedTile)){
-                    firstSelectedTile = selectedTile;
+            if(ctrl.canTheTileBeSelected(selectedTile)){
+                if(!ctrl.isTileFromTheSameType(ctrl.firstSelectedTile, selectedTile)){
+                    ctrl.firstSelectedTile = selectedTile;
                 } else{
-                    removeTiles([{tile: firstSelectedTile.tile.id}, {tile: selectedTile.tile.id}]);
-                    matchTile(id, firstSelectedTile._id, selectedTile._id);
+                    ctrl.removeTiles([{tile: ctrl.firstSelectedTile.tile.id}, {tile: selectedTile.tile.id}]);
+                    ctrl.matchTile(ctrl.boardId, ctrl.firstSelectedTile._id, selectedTile._id);
                 }
             }
         };
 
-        function canTheTileBeSelected(selectedTile) {
-            if (spectatorMode) {
+        ctrl.canTheTileBeSelected = function canTheTileBeSelected(selectedTile) {
+            if (ctrl.spectatorMode) {
                 return false;
             }
 
@@ -101,23 +101,23 @@ angular.module('MahjongMayhem')
             return canBeSelected;
         }
 
-        function isTileFromTheSameType(selectedTile){
+        ctrl.isTileFromTheSameType = function isTileFromTheSameType(firstTile, secondTile){
             var sameType = false;
-            if(firstSelectedTile) {
-                if (firstSelectedTile.tile.suit == selectedTile.tile.suit &&
-                    ((firstSelectedTile.tile.matchesWholeSuit && selectedTile.tile.matchesWholeSuit) || firstSelectedTile.tile.name == selectedTile.tile.name) &&
-                    firstSelectedTile.tile.id != selectedTile.tile.id) {
+            if(firstTile) {
+                if (firstTile.tile.suit == secondTile.tile.suit &&
+                    ((firstTile.tile.matchesWholeSuit && secondTile.tile.matchesWholeSuit) || firstTile.tile.name == secondTile.tile.name) &&
+                    firstTile.tile.id != secondTile.tile.id) {
                     sameType = true;
                 }
             }
             return sameType;
         }
 
-        function matchTile(gameId, firstTileId, secondTileId) {
+        ctrl.matchTile = function matchTile(gameId, firstTileId, secondTileId) {
             gameService.matchTile(gameId, firstTileId, secondTileId);
         }
 
-        function removeTiles(tiles) {
+        ctrl.removeTiles = function removeTiles(tiles) {
             tiles.forEach(function (tile) {
                 $("#tile-" + tile.tile).remove();
             });
