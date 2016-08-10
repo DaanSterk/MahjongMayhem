@@ -40,11 +40,11 @@ angular.module('MahjongMayhem')
             if ($scope.filterState) {
                 ctrl.filter += '&state=' + $scope.filterState;
             }
-            getGames();
+            ctrl.getGames();
         };
 
 
-        getGames = function() {
+        ctrl.getGames = function() {
             gamesService.getGames($scope.pageSize, $scope.pageIndex, ctrl.filter)
                 .then(function (responseData) {
                     $scope.games = responseData;
@@ -155,5 +155,5 @@ angular.module('MahjongMayhem')
         }
 
         // PAGE LOAD
-        getGames();
+        ctrl.getGames();
 }]);
