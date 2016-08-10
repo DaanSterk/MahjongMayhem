@@ -63,3 +63,8 @@
 @each $key, $value in $themes {
   @include game($key, $value);
 }
+
+
+#search-box {
+  width: 300px;
+}
