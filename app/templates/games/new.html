@@ -1,4 +1,4 @@
-<div ng-controller="GamesCtrl">
+<div ng-controller="GamesCtrl as gCtrl">
     <div class="panel panel-default panel-form center ttt">
         <div class="panel-heading">
             <h3 class="panel-title">New game</h3>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group width-100-pct">
-                        <button ng-click="newGame()" class="btn btn-primary width-100-pct">Create game</button>
+                        <button ng-click="gCtrl.newGame()" class="btn btn-primary width-100-pct">Create game</button>
                     </div>
                 </div>
             </form>
