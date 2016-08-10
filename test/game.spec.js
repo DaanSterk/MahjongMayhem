@@ -54,58 +54,56 @@ describe("GameCtrl", function() {
     });
 });
 
-// describe("GamesCtrl", function() {
-//     var gamesController;
-//     var gamesService;
-//     var createNewController;
-//     var httpBackend;
-//     var scope;
-//
-//     // initialize the app
-//     beforeEach(module('MahjongMayhem'));
-//
-//     // Inject the modules and get them in global variables
-//     beforeEach(inject(function($rootScope, $controller, $httpBackend, $injector){
-//         // The scope for the controller
-//         scope = $rootScope.$new();
-//         // Get the service which will be injected
-//         gameService = $injector.get('gamesService');
-//         // For mocking the backend
-//         httpBackend = $httpBackend;
-//
-//         // This is the controller we're going to test
-//         gameController = $controller('GamesCtrl', { $scope: scope });
-//     }));
-//
-//     describe("Testing the GamesController", function () {
-//         describe("Is the game joinable", function () {
-//             it("Should be able to join", function () {
-//                 var firstTile = {tile: {tile: {id: 1, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
-//                 var secondTile = {tile: {tile: {id: 2, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
-//
-//                 expect(isTileFromTheSameType(firstTile, secondTile), true);
-//             });
-//
-//             it("Should not be able to join", function () {
-//                 var firstTile = {tile: {tile: {id: 1, suit: "bamboo", name: "1", matchesWholeSuit: false}}};
-//                 var secondTile = {tile: {tile: {id: 2, suit: "circle", name: "3", matchesWholeSuit: false}}};
-//
-//                 expect(isTileFromTheSameType(firstTile, secondTile), false);
-//             });
-//
-//             it("Should match, same suit", function () {
-//                 var firstTile = {tile: {tile: {id: 1, suit: "dragon", name: "blue", matchesWholeSuit: true}}};
-//                 var secondTile = {tile: {tile: {id: 2, suit: "dragon", name: "red", matchesWholeSuit: true}}};
-//
-//                 expect(isTileFromTheSameType(firstTile, secondTile), true);
-//             });
-//
-//             it("Should not match, same tile", function () {
-//                 var firstTile = {tile: {tile: {id: 1, suit: "wind", name: "west", matchesWholeSuit: false}}};
-//                 var secondTile = {tile: {tile: {id: 1, suit: "wind", name: "west", matchesWholeSuit: false}}};
-//
-//                 expect(isTileFromTheSameType(firstTile, secondTile), false);
-//             });
-//         });
-//     });
-// });
+describe("GamesCtrl", function() {
+    var gamesController;
+    var gamesService;
+    var createNewController;
+    var httpBackend;
+    var scope;
+
+    // initialize the app
+    beforeEach(module('MahjongMayhem'));
+
+    // Inject the modules and get them in global variables
+    beforeEach(inject(function($rootScope, $controller, $httpBackend, $injector){
+        // The scope for the controller
+        scope = $rootScope.$new();
+        // Get the service which will be injected
+        gameService = $injector.get('gamesService');
+        // For mocking the backend
+        httpBackend = $httpBackend;
+
+        // This is the controller we're going to test
+        gamesController = $controller('GamesCtrl', { $scope: scope });
+    }));
+
+    describe("Testing the GamesController", function () {
+        describe("Is the game joinable", function () {
+            it("Should be able to join", function () {
+                localStorage.setItem("user.username", "BugsBunny");
+                var game = {_id:"57a9f3ee1d610d11007b5a0c",
+                    createdBy:{_id:"a.ketchum@student.avans.nl",name:"Ash Ketchum",__v:0},
+                    createdOn:"2016-08-09T15:17:02.045Z",
+                    gameTemplate:{_id:"Shanghai",__v:0,id:"Shanghai"},
+                    __v:0,
+                    players:[{_id:"a.ketchum@student.avans.nl",name:"Ash Ketchum",__v:0,$$hashKey:"object:3777"}],
+                    maxPlayers:7,minPlayers:1,state:"open",id:"57a9f3ee1d610d11007b5a0c",$$hashKey:"object:3671"};
+
+                expect(gamesController.isJoinable(game), true);
+            });
+
+            it("Should not be able to join", function () {
+                localStorage.setItem("user.username", "BugsBunny");
+                var game = {_id:"57a9f3ee1d610d11007b5a0c",
+                    createdBy:{_id:"b.bugs@student.avans.nl",name:"Bugs Bunny",__v:0},
+                    createdOn:"2016-08-09T15:17:02.045Z",
+                    gameTemplate:{_id:"Shanghai",__v:0,id:"Shanghai"},
+                    __v:0,
+                    players:[{_id:"b.bugs@student.avans.nl",name:"Bugs Bunny",__v:0,$$hashKey:"object:3777"}],
+                    maxPlayers:7,minPlayers:1,state:"open",id:"57a9f3ee1d610d11007b5a0c",$$hashKey:"object:3671"};
+
+                expect(gamesController.isJoinable(game), false);
+            });
+        });
+    });
+});

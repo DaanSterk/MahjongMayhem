@@ -1,5 +1,7 @@
 angular.module('MahjongMayhem')
     .controller('GamesCtrl', ['$scope', '$state', 'gamesService', function($scope, $state, gamesService) {
+        var ctrl = this;
+        ctrl.filter;
 
         // -----DEFAULT------
         $scope.pageSize = 100;
@@ -12,7 +14,7 @@ angular.module('MahjongMayhem')
         $scope.changeFilterTemplate = function(template) {
             $scope.filterTemplate = template;
             $scope.search();
-        }
+        };
 
         $scope.changeFilterState = function(state) {
             if (state) {
@@ -22,48 +24,48 @@ angular.module('MahjongMayhem')
                 $scope.filterState = state;
             }
             $scope.search();
-        }
+        };
 
         $scope.search = function() {
-            filter = "";
+            ctrl.filter = "";
             if ($scope.filterTemplate) {
-                filter += '&gameTemplate=' + $scope.filterTemplate;
+                ctrl.filter += '&gameTemplate=' + $scope.filterTemplate;
             }
             if ($scope.filterCreator) {
-                filter += '&createdBy=' + $scope.filterCreator;
+                ctrl.filter += '&createdBy=' + $scope.filterCreator;
             }
             if ($scope.filterPlayer) {
-                filter += '&player=' + $scope.filterPlayer;
+                ctrl.filter += '&player=' + $scope.filterPlayer;
             }
             if ($scope.filterState) {
-                filter += '&state=' + $scope.filterState;
+                ctrl.filter += '&state=' + $scope.filterState;
             }
             getGames();
-        }
+        };
 
-        var filter;
+
         getGames = function() {
-            gamesService.getGames($scope.pageSize, $scope.pageIndex, filter)
+            gamesService.getGames($scope.pageSize, $scope.pageIndex, ctrl.filter)
                 .then(function (responseData) {
                     $scope.games = responseData;
                 });
-        }
+        };
 
-        $scope.newGame = function() {
+        ctrl.newGame = function newGame() {
             gamesService.newGame($scope.game)
                 .then(function(response) {
                     $state.go('games');
                 });
-        }
+        };
 
-        $scope.joinGame = function(gameId) {
+        ctrl.joinGame = function joinGame(gameId) {
             gamesService.joinGame(gameId)
                 .then(function () {
                     $state.reload();
                 });
-        }
+        };
 
-        $scope.isJoinable = function(game) {
+        ctrl.isJoinable = function isJoinable(game) {
             var username = localStorage.getItem("user.username");
 
             if (game.state !== "open"
@@ -75,16 +77,16 @@ angular.module('MahjongMayhem')
             }
 
             return true;
-        }
+        };
 
-        $scope.startGame = function(gameId) {
+        ctrl.startGame = function startGame(gameId) {
             gamesService.startGame(gameId)
                 .then(function (response) {
                     $state.reload();
                 });
-        }
+        };
 
-        $scope.isStartable = function(game) {
+        ctrl.isStartable = function isStartable(game) {
             var username = localStorage.getItem("user.username");
 
             if (game.state !== "open"
@@ -94,16 +96,16 @@ angular.module('MahjongMayhem')
             }
 
             return true;
-        }
+        };
 
-        $scope.deleteGame = function(gameId) {
+        ctrl.deleteGame = function deleteGame(gameId) {
             gamesService.deleteGame(gameId)
                 .then(function (response) {
                     $state.reload();
                 });
-        }
+        };
 
-        $scope.isDeletable = function(game) {
+        ctrl.isDeletable = function isDeletable(game) {
             var username = localStorage.getItem("user.username");
 
             if (game.state !== "playing"
@@ -113,13 +115,13 @@ angular.module('MahjongMayhem')
             }
 
             return false;
-        }
+        };
 
-        $scope.playGame = function(gameid) {
+        ctrl.playGame = function playGame(gameid) {
             $state.go("game", { id: gameid} );
-        }
+        };
 
-        $scope.isPlayable = function(game) {
+        ctrl.isPlayable = function isPlayable(game) {
             var username = localStorage.getItem("user.username");
 
             if (game.state !== 'playing'
@@ -128,19 +130,19 @@ angular.module('MahjongMayhem')
             }
 
             return true;
-        }
+        };
 
-        $scope.isSpectatable = function(game) {
+        ctrl.isSpectatable = function isSpectatable(game) {
             if (game.state === 'open') {
                 return false;
             }
 
             return true;
-        }
+        };
 
-        $scope.spectateGame = function(gameid) {
+        ctrl.spectateGame = function spectateGame(gameid) {
             $state.go("game", { id: gameid, spectatorMode: true });
-        }
+        };
 
         function playerCollectionContains(collection, item) { // Determine if player e-mail address is in game players collection.
             for (var i = 0; i < collection.length; i++) {
