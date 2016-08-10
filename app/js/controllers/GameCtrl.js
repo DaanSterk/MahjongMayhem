@@ -107,7 +107,7 @@ angular.module('MahjongMayhem')
             });
 
             return canBeSelected;
-        }
+        };
 
         ctrl.isTileFromTheSameType = function isTileFromTheSameType(firstTile, secondTile){
             var sameType = false;
@@ -119,11 +119,11 @@ angular.module('MahjongMayhem')
                 }
             }
             return sameType;
-        }
+        };
 
         ctrl.matchTile = function matchTile(gameId, firstTileId, secondTileId) {
             gameService.matchTile(gameId, firstTileId, secondTileId);
-        }
+        };
 
         ctrl.removeTiles = function removeTiles(tiles) {
             tiles.forEach(function (tile) {
@@ -161,14 +161,14 @@ angular.module('MahjongMayhem')
             }
 
             return false;
-        }
+        };
 
         ctrl.endGame = function endGame(gameid) {
             gamesService.endGame(gameid)
                 .then(function (response) {
                     $state.reload();
                 });
-        }
+        };
 
         $scope.cheat = function() {
             var selectableTiles = new Array();
