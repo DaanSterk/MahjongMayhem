@@ -41,6 +41,13 @@
       padding: 0px 0px 10px 10px;
     }
 
+    .tile-hover:hover{
+      border-style: solid;
+      border-radius: 9px;
+      border: 5px solid lighten($color, 20%);
+      padding: 0px 0px 10px 10px;
+    }
+
     .matched-tile-row.even{
       background-color: lighten($color, 50%);
       border: 2px solid lighten($color, 30%);

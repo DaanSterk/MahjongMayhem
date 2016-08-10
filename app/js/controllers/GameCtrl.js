@@ -1,34 +1,36 @@
 angular.module('MahjongMayhem')
-    .controller('GameCtrl', ['$scope', '$state', '$http', '$filter', 'GLOBALS', 'gameSocket',  function($scope, $state, $http, $filter, GLOBALS, gameSocket) {
-        var id;
-        var spectatorMode;
-        var firstSelectedTile = {"tile": {"id": 0} };
+    .controller('GameCtrl', ['$scope', '$state', '$filter', 'gameService', 'gameSocket',  function($scope, $state, $filter, gameService, gameSocket) {
+        var ctrl = this;
+        ctrl.boardId;
+        ctrl.spectatorMode;
+        ctrl.firstSelectedTile = {"tile": {"id": 0} };
 
         // Page load
-        id = $state.params.id;
-        spectatorMode = $state.params.spectatorMode;
+        ctrl.boardId = $state.params.id;
+        ctrl.spectatorMode = $state.params.spectatorMode;
 
-        getTiles(id);
+        getTiles(ctrl.boardId);
 
-        gameSocket.connect(id);
+        gameSocket.connect(ctrl.boardId);
 
         gameSocket.match(function(tiles){
-            removeTiles(tiles);
+            getTiles(ctrl.boardId);
         });
 
-        function getTiles(gameid) {
-            if (!gameid) { // Na een refresh vervalt het game id. Terug gaan naar /games.
+        function getTiles(gameId) {
+            if (!gameId) { // Na een refresh vervalt het game id. Terug gaan naar /games.
                 $state.go("games");
                 return;
             }
-            $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
-                .then(function(response) {
-                    $scope.tiles = response.data;
+            gameService.getTiles(gameId)
+                .then(function (responseData) {
+                    $scope.tiles = responseData;
+                    ctrl.hasMatchesLeft();
                 });
         }
 
         $scope.isTheTileSelected = function (tileId){
-            return tileId === firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
+            return tileId === ctrl.firstSelectedTile.tile.id;
         };
 
         $scope.isEvenOrOddRow = function (index){
@@ -36,17 +38,18 @@ angular.module('MahjongMayhem')
         };
 
         $scope.selectTile = function(selectedTile){
-            if(canTheTileBeSelected(selectedTile)){
-                if(!isTileFromTheSameType(selectedTile)){
-                    firstSelectedTile = selectedTile;
+            if(ctrl.canTheTileBeSelected(selectedTile)){
+                if(!ctrl.isTileFromTheSameType(ctrl.firstSelectedTile, selectedTile)){
+                    ctrl.firstSelectedTile = selectedTile;
                 } else{
-                    matchTile(id, firstSelectedTile._id, selectedTile._id)
+                    ctrl.removeTiles([{tile: ctrl.firstSelectedTile.tile.id}, {tile: selectedTile.tile.id}]);
+                    ctrl.matchTile(ctrl.boardId, ctrl.firstSelectedTile._id, selectedTile._id);
                 }
             }
         };
 
-        function canTheTileBeSelected(selectedTile) {
-            if (spectatorMode) {
+        ctrl.canTheTileBeSelected = function canTheTileBeSelected(selectedTile) {
+            if (ctrl.spectatorMode) {
                 return false;
             }
 
@@ -100,29 +103,23 @@ angular.module('MahjongMayhem')
             return canBeSelected;
         }
 
-        function isTileFromTheSameType(selectedTile){
+        ctrl.isTileFromTheSameType = function isTileFromTheSameType(firstTile, secondTile){
             var sameType = false;
-            if(firstSelectedTile) {
-                if (firstSelectedTile.tile.suit == selectedTile.tile.suit &&
-                    ((firstSelectedTile.tile.matchesWholeSuit && selectedTile.tile.matchesWholeSuit) || firstSelectedTile.tile.name == selectedTile.tile.name) &&
-                    firstSelectedTile.tile.id != selectedTile.tile.id) {
+            if(firstTile) {
+                if (firstTile.tile.suit == secondTile.tile.suit &&
+                    ((firstTile.tile.matchesWholeSuit && secondTile.tile.matchesWholeSuit) || firstTile.tile.name == secondTile.tile.name) &&
+                    firstTile.tile.id != secondTile.tile.id) {
                     sameType = true;
                 }
             }
             return sameType;
         }
 
-        function matchTile(gameId, firstTileId, secondTileId) {
-            return $http({
-                method: 'POST',
-                url: GLOBALS.API_URL + '/Games/' + gameId + '/Tiles/matches',
-                data: { tile1Id: firstTileId, tile2Id: secondTileId }
-            }).then(function successCallback(response){
-                return response;
-            });
-        };
+        ctrl.matchTile = function matchTile(gameId, firstTileId, secondTileId) {
+            gameService.matchTile(gameId, firstTileId, secondTileId);
+        }
 
-        function removeTiles(tiles) {
+        ctrl.removeTiles = function removeTiles(tiles) {
             tiles.forEach(function (tile) {
                 $("#tile-" + tile.tile).remove();
             });
@@ -136,11 +133,11 @@ angular.module('MahjongMayhem')
         //    console.log(matches);
         //}
 
-        function hasMatchesLeft() {
+        ctrl.hasMatchesLeft = function hasMatchesLeft() {
             var selectableTiles = new Array();
             var tilesOnBoard = $filter("hasNoMatch")($scope.tiles);
             for (var i = 0; i < tilesOnBoard.length; i++) {
-                if (canTheTileBeSelected(tilesOnBoard[i])) {
+                if (ctrl.canTheTileBeSelected(tilesOnBoard[i])) {
                     selectableTiles.push(tilesOnBoard[i].tile);
                 }
             }
