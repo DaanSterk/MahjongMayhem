@@ -1,5 +1,5 @@
 angular.module('MahjongMayhem')
-    .controller('GameCtrl', ['$scope', '$state', '$filter', 'gameService', 'gameSocket',  function($scope, $state, $filter, gameService, gameSocket) {
+    .controller('GameCtrl', ['$scope', '$state', '$filter', 'gameService', 'gamesService', 'gameSocket',  function($scope, $state, $filter, gameService, gamesService, gameSocket) {
         var ctrl = this;
         ctrl.boardId;
         ctrl.spectatorMode;
@@ -8,6 +8,9 @@ angular.module('MahjongMayhem')
         // Page load
         ctrl.boardId = $state.params.id;
         ctrl.spectatorMode = $state.params.spectatorMode;
+
+        $scope.gameEnd = false;
+        $scope.boardMarginTop = 0;
 
         getTiles(ctrl.boardId);
 
@@ -25,7 +28,10 @@ angular.module('MahjongMayhem')
             gameService.getTiles(gameId)
                 .then(function (responseData) {
                     $scope.tiles = responseData;
-                    ctrl.hasMatchesLeft();
+                    if (!ctrl.hasMatchesLeft()) {
+                        $scope.gameEnd = true;
+                        $scope.boardMarginTop = 80;
+                    }
                 });
         }
 
@@ -125,14 +131,6 @@ angular.module('MahjongMayhem')
             });
         };
 
-        //function hasMatchesLeft() {
-        //    var matches = [];
-        //    $filter('hasNoMatch')($scope.tiles).forEach(function (tile) {
-        //        matches.push(tile.tile);
-        //    });
-        //    console.log(matches);
-        //}
-
         ctrl.hasMatchesLeft = function hasMatchesLeft() {
             var selectableTiles = new Array();
             var tilesOnBoard = $filter("hasNoMatch")($scope.tiles);
@@ -150,15 +148,52 @@ angular.module('MahjongMayhem')
                     if (a.id !== b.id) {
                         if (a.matchesWholeSuit && b.matchesWholeSuit) {
                             if (a.suit === b.suit) {
-                                console.log(a);
-                                console.log(b);
                                 return true;
                             }
                         }
                         else if (a.suit === b.suit) {
                             if (a.name === b.name) {
-                                console.log(a);
-                                console.log(b);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        ctrl.endGame = function endGame(gameid) {
+            gamesService.endGame(gameid)
+                .then(function (response) {
+                    $state.reload();
+                });
+        }
+
+        $scope.cheat = function() {
+            var selectableTiles = new Array();
+            var tilesOnBoard = $filter("hasNoMatch")($scope.tiles);
+            for (var i = 0; i < tilesOnBoard.length; i++) {
+                if (ctrl.canTheTileBeSelected(tilesOnBoard[i])) {
+                    selectableTiles.push(tilesOnBoard[i].tile);
+                }
+            }
+
+            for (var i = 0; i < selectableTiles.length; i++) {
+                for (var j = 0; j < selectableTiles.length; j++) {
+                    var a = selectableTiles[i];
+                    var b = selectableTiles[j];
+
+                    if (a.id !== b.id) {
+                        if (a.matchesWholeSuit && b.matchesWholeSuit) {
+                            if (a.suit === b.suit) {
+                                alert("Suit: " + a.suit + "; Name: " + a.name);
+                                return true;
+                            }
+                        }
+                        else if (a.suit === b.suit) {
+                            if (a.name === b.name) {
+                                alert("Suit: " + a.suit + "; Name: " + a.name);
                                 return true;
                             }
                         }

@@ -4,7 +4,8 @@ angular.module('MahjongMayhem').factory('gamesService', function ($http, GLOBALS
         newGame: newGame,
         joinGame: joinGame,
         startGame: startGame,
-        deleteGame: deleteGame
+        deleteGame: deleteGame,
+        endGame: endGame
     };
 
     function getGames(pageSize, pageIndex, filter) {
@@ -38,6 +39,13 @@ angular.module('MahjongMayhem').factory('gamesService', function ($http, GLOBALS
 
     function deleteGame(gameId) {
         return $http.delete(GLOBALS.API_URL + '/games/' + gameId, {})
+            .then(function(response) {
+                return response;
+            });
+    }
+
+    function endGame(gameId) {
+        return $http.get(GLOBALS.API_URL + '/games/' + gameId + '/end')
             .then(function(response) {
                 return response;
             });
