@@ -1,11 +1,11 @@
-<div ng-controller="GameCtrl">
+<div ng-controller="GameCtrl as gCtrl">
     <div ng-cloak="" class="tabsdemoDynamicHeight">
         <div class="board-container">
             <div ng-repeat="tile in tiles | hasNoMatch"
                  id="tile-{{tile.tile.id}}"
                  class="tile {{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
                  ng-click="selectTile(tile)"
-                 ng-class="isTheTileSelected(tile.tile.id)"
+                 ng-class="{'tile-hover': gCtrl.canTheTileBeSelected(tile), 'selected-tile': isTheTileSelected(tile.tile.id)}"
                  title="{{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
                  style="left: {{ tile.xPos * 36 }}; top: {{ tile.yPos * 45 }}; z-index: {{ tile.zPos }}">
             </div>

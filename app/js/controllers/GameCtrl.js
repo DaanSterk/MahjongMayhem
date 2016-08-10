@@ -29,7 +29,7 @@ angular.module('MahjongMayhem')
         }
 
         $scope.isTheTileSelected = function (tileId){
-            return tileId === ctrl.firstSelectedTile.tile.id ? "selected-tile" : "not-selected-tile";
+            return tileId === ctrl.firstSelectedTile.tile.id;
         };
 
         $scope.isEvenOrOddRow = function (index){
