@@ -1,4 +1,7 @@
 <div ng-controller="GameCtrl as gCtrl">
+    <div id="msg-end" ng-if="gameEnd">
+        <h1>This game has ended.</h1>
+    </div>
     <div ng-cloak="" class="tabsdemoDynamicHeight">
         <div class="board-container">
             <div ng-repeat="tile in tiles | hasNoMatch"
@@ -7,7 +10,7 @@
                  ng-click="selectTile(tile)"
                  ng-class="{'tile-hover': gCtrl.canTheTileBeSelected(tile), 'selected-tile': isTheTileSelected(tile.tile.id)}"
                  title="{{ tile.tile.suit.toLowerCase() }}-{{ tile.tile.name.toLowerCase() }}"
-                 style="left: {{ tile.xPos * 36 }}; top: {{ tile.yPos * 45 }}; z-index: {{ tile.zPos }}">
+                 style="left: {{ tile.xPos * 36 }}; top: {{ tile.yPos * 45 - tile.zPos * 5 + 25 + boardMarginTop }}; z-index: {{ tile.zPos }}">
             </div>
         </div>
 
@@ -17,7 +20,10 @@
                       <span class="input-group-btn">
                         <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
                       </span>
-                    <input type="text" class="form-control" placeholder="Search matched tiles" ng-model="searchMatchedTile">
+                    <input id="search-box" type="text" class="form-control" placeholder="Search matched tiles" ng-model="searchMatchedTile">
+                    <span>
+                        <button ng-if="!gameEnd" ng-click="cheat()" class="btn btn-danger">Cheat!</button>
+                    </span>
                 </div>
             </div>
             <div class="matched-tiles">

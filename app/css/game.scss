@@ -2,6 +2,8 @@
 
 .board-container{
   width: 750px;
+
+  margin-left: -300px;
 }
 
 .matched-tiles-container{
@@ -60,4 +62,9 @@
 
 @each $key, $value in $themes {
   @include game($key, $value);
+}
+
+
+#search-box {
+  width: 300px;
 }
