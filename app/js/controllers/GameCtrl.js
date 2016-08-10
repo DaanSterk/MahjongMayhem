@@ -14,7 +14,6 @@ angular.module('MahjongMayhem')
 
         gameSocket.match(function(tiles){
             removeTiles(tiles);
-            console.log(matchesLeft());
         });
 
         function getTiles(gameid) {
@@ -25,7 +24,6 @@ angular.module('MahjongMayhem')
             $http.get(GLOBALS.API_URL + '/games/' + gameid + '/tiles')
                 .then(function(response) {
                     $scope.tiles = response.data;
-                    console.log(matchesLeft());
                 });
         }
 
@@ -98,6 +96,7 @@ angular.module('MahjongMayhem')
                     }
                 }
             });
+
             return canBeSelected;
         }
 
@@ -129,15 +128,22 @@ angular.module('MahjongMayhem')
             });
         };
 
-        function matchesLeft() {
+        //function hasMatchesLeft() {
+        //    var matches = [];
+        //    $filter('hasNoMatch')($scope.tiles).forEach(function (tile) {
+        //        matches.push(tile.tile);
+        //    });
+        //    console.log(matches);
+        //}
+
+        function hasMatchesLeft() {
             var selectableTiles = new Array();
-            for (var i = 0; i < $scope.tiles.length; i++) {
-                if (canTheTileBeSelected($scope.tiles[i])) {
-                    selectableTiles.push($scope.tiles[i].tile);
+            var tilesOnBoard = $filter("hasNoMatch")($scope.tiles);
+            for (var i = 0; i < tilesOnBoard.length; i++) {
+                if (canTheTileBeSelected(tilesOnBoard[i])) {
+                    selectableTiles.push(tilesOnBoard[i].tile);
                 }
             }
-
-            console.log(selectableTiles);
 
             for (var i = 0; i < selectableTiles.length; i++) {
                 for (var j = 0; j < selectableTiles.length; j++) {
