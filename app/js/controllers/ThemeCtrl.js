@@ -1,25 +1,12 @@
 angular.module('MahjongMayhem').controller('ThemeCtrl', ['$scope', function($scope) {
 
-    $scope.themeChanger = {
-        settings: {
-            container: $('body'),
-            buttons: $('#theme-control-container > button')
-        },
+    $scope.themes = [{name: "Funny banana", theme: "banana"}, {name: "Hot cherry", theme: "cherry"}, {name: "Deep purple", theme: "blueberry"}, {name: "Smooth leaf", theme: "leaf"}, {name: "Night sky", theme: "nightsky"}, {name: "Burnt lobster", theme: "anthracite"}];
 
-        init: function () {
-            var _self = this;
+    $scope.changeThemeOnClick = function (theme) {
+        $('body').removeClass().addClass(theme);
+        $('#theme-control-container > button').removeAttr('disabled');
+        $('button').find("[data-theme='" + theme + "']").attr('disabled', true);
 
-            this.settings.buttons.click(function () {
-                var $node = $(this),
-                    theme = $node.data('theme');
-                _self.settings.container.removeClass().addClass(theme);
-                _self.settings.buttons.removeAttr('disabled');
-                $node.attr('disabled', true);
-
-                localStorage.setItem('theme', theme);
-            });
-        }
+        localStorage.setItem('theme', theme);
     };
-
-    $scope.themeChanger.init();
 }]);
