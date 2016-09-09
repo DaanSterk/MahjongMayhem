@@ -44,21 +44,19 @@ angular.module('MahjongMayhem')
         };
 
         $scope.selectTile = function(selectedTile){
-            if(ctrl.canTheTileBeSelected(selectedTile)){
-                if(!ctrl.isTileFromTheSameType(ctrl.firstSelectedTile, selectedTile)){
-                    ctrl.firstSelectedTile = selectedTile;
-                } else{
-                    ctrl.removeTiles([{tile: ctrl.firstSelectedTile.tile.id}, {tile: selectedTile.tile.id}]);
-                    ctrl.matchTile(ctrl.boardId, ctrl.firstSelectedTile._id, selectedTile._id);
+            if (!spectatorMode) {
+                if (ctrl.canTheTileBeSelected(selectedTile)) {
+                    if (!ctrl.isTileFromTheSameType(ctrl.firstSelectedTile, selectedTile)) {
+                        ctrl.firstSelectedTile = selectedTile;
+                    } else {
+                        ctrl.removeTiles([{tile: ctrl.firstSelectedTile.tile.id}, {tile: selectedTile.tile.id}]);
+                        ctrl.matchTile(ctrl.boardId, ctrl.firstSelectedTile._id, selectedTile._id);
+                    }
                 }
             }
         };
 
         ctrl.canTheTileBeSelected = function canTheTileBeSelected(selectedTile) {
-            if (ctrl.spectatorMode) {
-                return false;
-            }
-
             var canBeSelected = true,
                 tileAbove = false,
                 tileRight = false,
